@@ -1,9 +1,18 @@
-﻿namespace TiktokLikeASP.Models
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TiktokLikeASP.Models
 {
     public class Tag
     {
-        public Guid id { get; set; }
-        public string name { get; set; }
-        public List<Post> posts { get; set; }
+        [Column("id")]
+        public Guid Id { get; set; }
+
+        [Column("name")]
+        public string Name { get; set; }
+
+        [Column("posts")]
+        public List<Post> Posts { get; set; }
     }
 }
