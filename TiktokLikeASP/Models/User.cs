@@ -37,6 +37,5 @@ namespace TiktokLikeASP.Models
         
         [Column("users_followed")]
         public List<Follow> UsersFollowed { get; set; } // People that we follow
-
     }
 }
