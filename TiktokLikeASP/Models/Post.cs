@@ -13,6 +13,8 @@
 
         public User Users { get; } = new();
 
+        public List<User> Userlikes { get; set; }
+
 
         public List<Comment> Comments { get; } = new();
     }
