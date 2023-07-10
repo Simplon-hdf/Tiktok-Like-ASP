@@ -7,13 +7,13 @@
 
         public string video_link { get; set; }
 
-        public Boolean is_visible { get; set; }
+        public bool is_visible { get; set; }
 
         public List<Tag> Tags { get; } = new();
 
-        public List<Users> Users { get; } = new();
+        public User Users { get; } = new();
 
 
-        public List<Comments> Comments { get; } = new();
+        public List<Comment> Comments { get; } = new();
     }
 }
