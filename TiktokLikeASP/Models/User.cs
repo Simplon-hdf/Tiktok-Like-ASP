@@ -9,6 +9,6 @@
 
         public string password { get; set; }
 
-        public bool is_Visible { get; set; }
+        public bool is_visible { get; set; }
     }
 }
