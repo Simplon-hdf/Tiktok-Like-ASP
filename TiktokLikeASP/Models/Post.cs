@@ -29,8 +29,8 @@ namespace TiktokLikeASP.Models
         [Column("tags")]
         public List<Tag> Tags { get; set; }
 
-        [Column("users")]
-        public User Users { get; set; }
+        [Column("creator")]
+        public User Creator { get; set; }
 
         [Column("comments")]
         public List<Comment> Comments { get; set; }
