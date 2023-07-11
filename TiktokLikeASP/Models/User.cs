@@ -21,6 +21,9 @@ namespace TiktokLikeASP.Models
         [Column("is_visible")]
         public bool IsVisible { get; set; }
 
+        [Column("is_admin")]
+        public bool IsAdmin { get; set; }
+
         /*               RELATIONS                  */
 
         [Column("published_posts")]
