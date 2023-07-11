@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-
-using Microsoft.EntityFrameworkCore;
-=======
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
->>>>>>> 46b49ee98807097c3cd4e131508f54f9b3ee415a
 using TiktokLikeASP.Context;
 
 var builder = WebApplication.CreateBuilder(args);
