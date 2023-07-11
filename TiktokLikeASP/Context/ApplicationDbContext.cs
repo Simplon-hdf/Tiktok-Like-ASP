@@ -20,7 +20,7 @@ namespace TiktokLikeASP.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Post>()
-                .HasMany(e => e.Userlikes)
+                .HasMany(e => e.UserLikes)
                 .WithMany(e => e.LikedPosts)
                 .UsingEntity(
                     "UserLikesPost",
