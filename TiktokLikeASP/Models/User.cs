@@ -35,10 +35,10 @@ namespace TiktokLikeASP.Models
         [Column("liked_posts")]
         public List<Post> LikedPosts { get; set; }
 
-        [Column("followers")]
-        public List<Follow> Followers { get; set; } //Peoples that follow us
+        /*[Column("followers")]
+        public List<Follow> Followers { get; set; } //Peoples that follow us*/
         
-        [Column("users_followed")]
-        public List<Follow> UsersFollowed { get; set; } // People that we follow
+/*        [Column("users_followed")]
+        public List<Follow> UsersFollowed { get; set; } // People that we follow*/
     }
 }
