@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using TiktokLikeASP.Models;
 
 namespace TiktokLikeASP.Context
@@ -14,7 +15,15 @@ namespace TiktokLikeASP.Context
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to postgres with connection string from app settings
-            options.UseNpgsql(Configuration.GetConnectionString("WebApiDatabase"));
+            var conStrBuilder = new NpgsqlConnectionStringBuilder(
+            Configuration.GetConnectionString("WebApiDatabase"));
+            conStrBuilder.Password = Configuration["DB_PASSWORD"];
+            conStrBuilder.Username = Configuration["DB_USER"];
+            conStrBuilder.Database = Configuration["DB_NAME"];
+
+            options.UseNpgsql(conStrBuilder.ConnectionString);
+
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
