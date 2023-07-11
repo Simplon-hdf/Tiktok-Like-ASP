@@ -14,16 +14,13 @@ namespace TiktokLikeASP.Context
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            // connect to postgres with connection string from app settings
-            var conStrBuilder = new NpgsqlConnectionStringBuilder(
-            Configuration.GetConnectionString("WebApiDatabase"));
+            var conStrBuilder = new NpgsqlConnectionStringBuilder(Configuration.GetConnectionString("WebApiDatabase"));
             conStrBuilder.Password = Configuration["DB_PASSWORD"];
             conStrBuilder.Username = Configuration["DB_USER"];
             conStrBuilder.Database = Configuration["DB_NAME"];
 
+            // connect to postgres with connection string from app settings
             options.UseNpgsql(conStrBuilder.ConnectionString);
-
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
