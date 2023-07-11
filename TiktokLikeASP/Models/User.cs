@@ -21,6 +21,9 @@ namespace TiktokLikeASP.Models
         [Column("is_visible")]
         public bool IsVisible { get; set; }
 
+        [Column("is_admin")]
+        public bool IsAdmin { get; set; }
+
         /*               RELATIONS                  */
 
         [Column("published_posts")]
@@ -32,10 +35,10 @@ namespace TiktokLikeASP.Models
         [Column("liked_posts")]
         public List<Post> LikedPosts { get; set; }
 
-        [Column("followers")]
-        public List<Follow> Followers { get; set; } //Peoples that follow us
+        /*[Column("followers")]
+        public List<Follow> Followers { get; set; } //Peoples that follow us*/
         
-        [Column("users_followed")]
-        public List<Follow> UsersFollowed { get; set; } // People that we follow
+/*        [Column("users_followed")]
+        public List<Follow> UsersFollowed { get; set; } // People that we follow*/
     }
 }
