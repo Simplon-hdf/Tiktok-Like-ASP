@@ -1,0 +1,49 @@
+﻿@model TiktokLikeASP.Models.ViewModels.RegisterRequest
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Register here!</h1>
+
+<form action="/Account/Register" method="post">
+    <div class="container py-2">
+        <label class="form-label"> <b>Username</b></label> <br />
+        <input class="form-control" type="text" name="username" placeholder="Username" asp-for="Username" required />
+    </div>
+
+    <div class="container py-2">
+        <label class="form-label"><b>Email</b></label> <br />
+        <input class="form-control" type="email" name="email" placeholder="Email" asp-for="Email" required />
+    </div>
+
+    <div class="container py-2">
+        <label class="form-label"><b>Password</b></label> <br />
+        <input class="form-control"
+            type="password" 
+            name="password" 
+            placeholder="Password" 
+            asp-for="Password" 
+            required 
+        />
+    </div>
+
+    <div class="container py-2">
+        <label class="form-label"><b>Confirm password</b></label> <br />
+        <input class="form-control"
+            type="password" 
+            name="password" 
+            placeholder="Enter again your password" 
+            asp-for="ConfirmPassword" 
+            required 
+        />
+    </div>
+
+    <div class="container py-2">
+        <input class="btn btn-dark " type="submit" value="Register" />
+    </div>
+
+    <!-- In case of errors: show an error message depending of the problem encountered.-->
+    <div asp-validation-summary="All" class="text-danger"></div> 
+</form>
