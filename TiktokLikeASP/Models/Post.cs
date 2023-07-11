@@ -22,10 +22,13 @@ namespace TiktokLikeASP.Models
         [Column("is_visible")]
         public bool IsVisible { get; set; }
 
-        public List<User> Userlikes { get; set; }
 
 
         /*         RELATIONS         */
+
+        [Column("user_likes")]
+        public List<User> UserLikes { get; set; }
+
         [Column("tags")]
         public List<Tag> Tags { get; set; }
 
