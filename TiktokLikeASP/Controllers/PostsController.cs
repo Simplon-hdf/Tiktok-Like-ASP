@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 using TiktokLikeASP.Context;
 using TiktokLikeASP.Models;
+using TiktokLikeASP.Models.ViewModels;
 
 namespace TiktokLikeASP.Controllers
 {
@@ -48,7 +50,7 @@ namespace TiktokLikeASP.Controllers
         // GET: Posts/Create
         public IActionResult Create()
         {
-            ViewData["Id"] = new SelectList(_context.Persons, "Id", "Id");
+            /*ViewData["Id"] = new SelectList(_context.Persons, "Id", "Id");*/
             return View();
         }
 
@@ -56,18 +58,22 @@ namespace TiktokLikeASP.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,VideoLink,PublishDate,IsVisible")] Post post)
+        public IActionResult Create(NewPostRequest newPostRequest)
         {
-            if (ModelState.IsValid)
+            var userDbEntry = _context.Persons.FirstOrDefault(acc => acc.Name == "Jean");
+            Post post = new Post
             {
-                post.Id = Guid.NewGuid();
-                _context.Add(post);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["Id"] = new SelectList(_context.Persons, "Id", "Id", post.Id);
-            return View(post);
+                Id = Guid.NewGuid(),
+                Title = newPostRequest.Title,
+                VideoLink = newPostRequest.VideoLink,
+                PublishDate = DateOnly.FromDateTime(DateTime.Now),
+                IsVisible = true,
+                Creator = userDbEntry
+            };
+            _context.Posts.Add(post);
+            _context.SaveChanges();
+            return RedirectToAction("/");
+            /*ViewData["Id"] = new SelectList(_context.Persons, "Id", "Id", post.Id);*/
         }
 
         // GET: Posts/Edit/5

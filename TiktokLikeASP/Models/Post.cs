@@ -17,7 +17,7 @@ namespace TiktokLikeASP.Models
         [Column("publish_date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime PublishDate { get; set; }
+        public DateOnly PublishDate { get; set; }
 
         [Column("is_visible")]
         public bool IsVisible { get; set; }
