@@ -121,5 +121,15 @@ namespace TiktokLikeASP.Controllers
             return RedirectToAction("Index", "Home"); //Should later redirect to the feed of posts.
         }
         #endregion
+
+        #region LOGOUT
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Index", "Home");
+        }
+        #endregion
     }
 }

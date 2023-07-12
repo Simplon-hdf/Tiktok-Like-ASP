@@ -16,13 +16,14 @@ namespace TiktokLikeASP.Controllers
 
         public IActionResult Index()
         {
-            
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Username")))
             {
                 ViewData["Username"] = HttpContext.Session.GetString("Username");
+                ViewData["SessionActiveState"] = true;
                 return View();
             }
             ViewData["Username"] = "";
+            ViewData["SessionActiveState"] = false;
 
             return View();
         }
