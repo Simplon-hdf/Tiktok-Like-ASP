@@ -30,7 +30,7 @@ namespace TiktokLikeASP.Context
                 .WithMany(e => e.LikedPosts)
                 .UsingEntity(
                     "UserLikesPost",
-                    l => l.HasOne(typeof(User)).WithMany().HasForeignKey("UsersId").HasPrincipalKey(nameof(User.Id)),
+                    l => l.HasOne(typeof(Person)).WithMany().HasForeignKey("UsersId").HasPrincipalKey(nameof(Person.Id)),
                     r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)),
                     j => j.HasKey("PostsId", "UsersId"));
 
@@ -41,7 +41,7 @@ namespace TiktokLikeASP.Context
                 .IsRequired();
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Person> Persons { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Tag> Tags { get; set; }

@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace TiktokLikeASP.Models
 {
-    public class User
+    public class Person
     {
         [Column("id")]
         public Guid Id { get; set; }

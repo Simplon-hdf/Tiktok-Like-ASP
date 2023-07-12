@@ -48,7 +48,7 @@ namespace TiktokLikeASP.Controllers
         // GET: Posts/Create
         public IActionResult Create()
         {
-            ViewData["Id"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["Id"] = new SelectList(_context.Persons, "Id", "Id");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace TiktokLikeASP.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id"] = new SelectList(_context.Users, "Id", "Id", post.Id);
+            ViewData["Id"] = new SelectList(_context.Persons, "Id", "Id", post.Id);
             return View(post);
         }
 
@@ -83,7 +83,7 @@ namespace TiktokLikeASP.Controllers
             {
                 return NotFound();
             }
-            ViewData["Id"] = new SelectList(_context.Users, "Id", "Id", post.Id);
+            ViewData["Id"] = new SelectList(_context.Persons, "Id", "Id", post.Id);
             return View(post);
         }
 
@@ -119,7 +119,7 @@ namespace TiktokLikeASP.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id"] = new SelectList(_context.Users, "Id", "Id", post.Id);
+            ViewData["Id"] = new SelectList(_context.Persons, "Id", "Id", post.Id);
             return View(post);
         }
 

@@ -11,9 +11,9 @@ namespace TiktokLikeASP.Models
         public int userFollowedId { get; set; }
 
         [Column("follower")]
-        public User Follower { get; set; }
+        public Person Follower { get; set; }
 
         [Column("user_followed")]
-        public User UserFollowed { get; set; }
+        public Person UserFollowed { get; set; }
     }
 }

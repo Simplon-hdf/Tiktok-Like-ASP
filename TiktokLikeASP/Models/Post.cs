@@ -27,13 +27,13 @@ namespace TiktokLikeASP.Models
         /*         RELATIONS         */
 
         [Column("user_likes")]
-        public List<User> UserLikes { get; set; }
+        public List<Person> UserLikes { get; set; }
 
         [Column("tags")]
         public List<Tag> Tags { get; set; }
 
         [Column("creator")]
-        public User Creator { get; set; }
+        public Person Creator { get; set; }
 
         [Column("comments")]
         public List<Comment> Comments { get; set; }
