@@ -34,10 +34,16 @@ namespace TiktokLikeASP.Controllers
         [HttpPost]
         public IActionResult Register(RegisterRequest registerRequest) 
         {
-            var duplicateUsernameDbEntry = _context.Users.FirstOrDefault(
+            if(registerRequest.Password != registerRequest.ConfirmPassword)
+            {
+                ModelState.AddModelError("", "Passwords don't match.");
+                return View("Register"); //If registering fail, reload the HttpGet Register()
+            }
+
+            var duplicateUsernameDbEntry = _context.Persons.FirstOrDefault(
                 acc => acc.Name == registerRequest.Username
             );
-            var duplicateEmailDbEntry = _context.Users.FirstOrDefault(
+            var duplicateEmailDbEntry = _context.Persons.FirstOrDefault(
                 acc => acc.Email == registerRequest.Email
             );
 
@@ -48,7 +54,7 @@ namespace TiktokLikeASP.Controllers
                 return View("Register"); //If registering fail, reload the HttpGet Register()
             }
 
-            var newUser = new User
+            var newUser = new Person
             {
                 Name = registerRequest.Username,
                 Email = registerRequest.Email,
@@ -56,7 +62,8 @@ namespace TiktokLikeASP.Controllers
             };
 
             // Hash and Salt that password !
-            _context.Users.Add(newUser);
+            _context.Persons.Add(newUser);
+            _context.SaveChanges();
 
             // If register succed:
             return RedirectToAction("Login");
@@ -86,11 +93,11 @@ namespace TiktokLikeASP.Controllers
             string hashedPassword = PasswordHashing(loginRequest.Password);
 
             //To-do: Must be protected from SQL Injection
-            var searchUserDbEntry = _context.Users.FirstOrDefault(
+            var searchUserDbEntry = _context.Persons.FirstOrDefault(
                 acc => acc.Name == loginRequest.Username
             );
 
-            // Cannot find the given username in database.
+            // Cannot find the given username in database and passwords don't match.
             if(searchUserDbEntry == null || searchUserDbEntry.Password != hashedPassword)
             {
                 ModelState.AddModelError("", "Cannot find account for given username and password");
@@ -103,6 +110,7 @@ namespace TiktokLikeASP.Controllers
              * 
              */
 
+            ModelState.AddModelError("", "Perfect"); //That's not how you should use it!
             return View("Login"); //Should later redirect to the feed of posts.
         }
         #endregion

@@ -19,6 +19,6 @@ namespace TiktokLikeASP.Models
         public Post Post { get; set; }
 
         [Column("user")]
-        public User User { get; set; }
+        public Person User { get; set; }
     }
 }
