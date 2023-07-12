@@ -91,7 +91,7 @@ namespace TiktokLikeASP.Controllers
             );
 
             // Cannot find the given username in database.
-            if(searchUserDbEntry == null)
+            if(searchUserDbEntry == null || searchUserDbEntry.Password != hashedPassword)
             {
                 ModelState.AddModelError("", "Cannot find account for given username and password");
                 return View("Login"); //Return to Login.cshtml with an error to show.
@@ -103,7 +103,7 @@ namespace TiktokLikeASP.Controllers
              * 
              */
 
-            return View("Login"); //Show Login.cshtml
+            return View("Login"); //Should later redirect to the feed of posts.
         }
         #endregion
     }
