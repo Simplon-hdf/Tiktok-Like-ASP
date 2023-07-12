@@ -3,12 +3,15 @@ using TiktokLikeASP.Context;
 using TiktokLikeASP.Models.ViewModels;
 using TiktokLikeASP.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace TiktokLikeASP.Controllers
 {
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
+
         /// <summary>
         /// Store Database context on application start.
         /// </summary>
@@ -105,13 +108,27 @@ namespace TiktokLikeASP.Controllers
             }
 
             /* 
-             * 
-             * Create a cookie to allow the user to stay signed in
-             * 
+             * Create a session to allow the user to stay signed in. Until he close its browser.
              */
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Username")))
+            {
+                // Set the session value
+                HttpContext.Session.SetString("UserId", searchUserDbEntry.Id.ToString());
+                HttpContext.Session.SetString("Username", searchUserDbEntry.Name);
+            }
 
-            ModelState.AddModelError("", "Perfect"); //That's not how you should use it!
-            return View("Login"); //Should later redirect to the feed of posts.
+            //ModelState.AddModelError("", "Perfect"); //That's not how you should use it!
+            return RedirectToAction("Index", "Home"); //Should later redirect to the feed of posts.
+        }
+        #endregion
+
+        #region LOGOUT
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Index", "Home");
         }
         #endregion
     }

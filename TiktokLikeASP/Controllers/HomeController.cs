@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using TiktokLikeASP.Context;
 using TiktokLikeASP.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace TiktokLikeASP.Controllers
 {
@@ -28,6 +29,15 @@ namespace TiktokLikeASP.Controllers
         // GET: Posts
         public async Task<IActionResult> Index()
         {
+            ViewData["Username"] = "";
+            ViewData["SessionActiveState"] = false;
+
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Username")))
+            {
+                ViewData["Username"] = HttpContext.Session.GetString("Username");
+                ViewData["SessionActiveState"] = true;
+            }
+        
             var applicationDbContext = _context.Posts.Include(p => p.Creator);
             return View(await applicationDbContext.ToListAsync());
         }
