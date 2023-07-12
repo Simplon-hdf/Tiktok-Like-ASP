@@ -60,10 +60,9 @@ namespace TiktokLikeASP.Controllers
         [HttpPost]
         public IActionResult Create(NewPostRequest newPostRequest)
         {
-            var userDbEntry = _context.Persons.FirstOrDefault(acc => acc.Name == "Jean");
+            var userDbEntry = _context.Persons.FirstOrDefault();
             Post post = new Post
             {
-                Id = Guid.NewGuid(),
                 Title = newPostRequest.Title,
                 VideoLink = newPostRequest.VideoLink,
                 PublishDate = DateOnly.FromDateTime(DateTime.Now),

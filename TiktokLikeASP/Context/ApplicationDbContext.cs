@@ -37,7 +37,7 @@ namespace TiktokLikeASP.Context
             modelBuilder.Entity<Post>()
                 .HasOne(e => e.Creator)
                 .WithMany(e => e.PublishedPosts)
-                .HasForeignKey(e => e.Id)
+                .HasForeignKey(e => e.CreatorId)
                 .IsRequired();
         }
 
