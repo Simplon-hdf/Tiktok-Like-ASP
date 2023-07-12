@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TiktokLikeASP.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace TiktokLikeASP.Controllers
 {
@@ -15,6 +16,14 @@ namespace TiktokLikeASP.Controllers
 
         public IActionResult Index()
         {
+            
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Username")))
+            {
+                ViewData["Username"] = HttpContext.Session.GetString("Username");
+                return View();
+            }
+            ViewData["Username"] = "";
+
             return View();
         }
 
