@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using TiktokLikeASP.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TiktokLikeASP.Context
 {
