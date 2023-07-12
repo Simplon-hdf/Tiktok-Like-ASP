@@ -22,8 +22,6 @@ namespace TiktokLikeASP.Models
         [Column("is_visible")]
         public bool IsVisible { get; set; }
 
-
-
         /*         RELATIONS         */
 
         [Column("user_likes")]
@@ -31,6 +29,9 @@ namespace TiktokLikeASP.Models
 
         [Column("tags")]
         public List<Tag> Tags { get; set; }
+        
+        [Column("creator_id")]
+        public Guid CreatorId { get; set; }
 
         [Column("creator")]
         public Person Creator { get; set; }
