@@ -16,10 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ApiVideo" Version="1.3.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" />
@@ -28,7 +25,18 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+    <PackageReference Include="RestSharp" Version="110.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Videos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Videos\f0480625-ef9a-4ad4-bd6f-1d461841c5ab.mp4" />
+    <None Include="wwwroot\Videos\f7dd0847-b2c2-4193-9687-53bace3d6d2f.mp4" />
   </ItemGroup>
 
 </Project>

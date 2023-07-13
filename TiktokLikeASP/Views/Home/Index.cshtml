@@ -12,15 +12,13 @@
     }
     <p></p>
 </div>
-@if (ViewData["SessionActiveState"] != null && typeof(bool) == ViewData["SessionActiveState"].GetType() && (bool)ViewData["SessionActiveState"])
-{   
-    foreach (var item in Model)
-    {
-        <article>
-            <h1>@item.Title</h1>
-            <video src=@item.VideoLink width=320 height=240 controls>
-            </video>
-        </article>
-    }
+@foreach (var item in Model)
+{
+    <article>
+        <h1>@item.Title</h1>
+        <video width=300 height=300 controls>
+            <source src="https://localhost:7065/Videos/@item.VideoLink" type="video/mp4">
+        </video>
+    </article>
 }
 
