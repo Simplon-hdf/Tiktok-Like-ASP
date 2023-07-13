@@ -6,13 +6,21 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome @ViewData["Username"]</h1>
+    @if (ViewData["Error"] != null && ViewData["Error"] != "")
+    {
+        <p class="text-danger"> @ViewData["Error"] </p>
+    }
+    <p></p>
 </div>
-@foreach (var item in Model)
-{
-    <article>
-        <h1>@item.Title</h1>
-        <video src=@item.VideoLink width=320 height=240 controls >
-        </video>
-    </article>
+@if (ViewData["SessionActiveState"] != null && typeof(bool) == ViewData["SessionActiveState"].GetType() && (bool)ViewData["SessionActiveState"])
+{   
+    foreach (var item in Model)
+    {
+        <article>
+            <h1>@item.Title</h1>
+            <video src=@item.VideoLink width=320 height=240 controls>
+            </video>
+        </article>
+    }
 }
 
