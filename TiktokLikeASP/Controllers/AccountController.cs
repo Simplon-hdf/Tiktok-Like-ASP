@@ -116,7 +116,6 @@ namespace TiktokLikeASP.Controllers
                 HttpContext.Session.SetString("UserId", searchUserDbEntry.Id.ToString());
                 HttpContext.Session.SetString("Username", searchUserDbEntry.Name);
             }
-
             //ModelState.AddModelError("", "Perfect"); //That's not how you should use it!
             return RedirectToAction("Index", "Home"); //Should later redirect to the feed of posts.
         }

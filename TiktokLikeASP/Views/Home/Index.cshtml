@@ -11,7 +11,8 @@
 {
     <article>
         <h1>@item.Title</h1>
-        <video src=@item.VideoLink width=320 height=240 controls >
+        <video width=300 height=300 controls>
+            <source src="https://localhost:7065/Videos/@item.VideoLink" type="video/mp4">
         </video>
     </article>
 }

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Plugins;
 using TiktokLikeASP.Context;
 using TiktokLikeASP.Models;
 using TiktokLikeASP.Models.ViewModels;
+using TiktokLikeASP.DistantData;
+using System.IO;
 
 namespace TiktokLikeASP.Controllers
 {
@@ -61,10 +60,13 @@ namespace TiktokLikeASP.Controllers
         public IActionResult Create(NewPostRequest newPostRequest)
         {
             var userDbEntry = _context.Persons.FirstOrDefault();
+
+            string videoName = Uploader.UploadVideo(newPostRequest.VideoLink);
+
             Post post = new Post
             {
                 Title = newPostRequest.Title,
-                VideoLink = newPostRequest.VideoLink,
+                VideoLink = videoName,
                 PublishDate = DateOnly.FromDateTime(DateTime.Now),
                 IsVisible = true,
                 Creator = userDbEntry
