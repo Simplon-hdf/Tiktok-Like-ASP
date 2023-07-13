@@ -19,7 +19,7 @@ namespace TiktokLikeASP.DistantData
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
 
                 // Specify the path where you want to save the video file
-                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Videos", fileName);
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Videos", fileName);
 
                 // Save the file to the server
                 using (var stream = new FileStream(filePath, FileMode.Create))
