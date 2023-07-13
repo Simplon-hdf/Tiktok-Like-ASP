@@ -59,10 +59,20 @@ namespace TiktokLikeASP.Controllers
         [HttpPost]
         public IActionResult Create(NewPostRequest newPostRequest)
         {
-            var userDbEntry = _context.Persons.FirstOrDefault();
+            //Check if no user are connected
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
+            {
+                TempData["Error"] = "Impossible to create a post if you aren't connected.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            Guid currentUserId = Guid.Parse(HttpContext.Session.GetString("UserId")); //Well, currently, that cannot be null...
+            var userDbEntry = _context.Persons.FirstOrDefault(
+                acc => acc.Id == currentUserId);
+
+       
 
             string videoName = Uploader.UploadVideo(newPostRequest.VideoLink);
-
             Post post = new Post
             {
                 Title = newPostRequest.Title,
@@ -73,7 +83,7 @@ namespace TiktokLikeASP.Controllers
             };
             _context.Posts.Add(post);
             _context.SaveChanges();
-            return RedirectToAction("/");
+            return RedirectToAction("Index", "Home");
             /*ViewData["Id"] = new SelectList(_context.Persons, "Id", "Id", post.Id);*/
         }
 

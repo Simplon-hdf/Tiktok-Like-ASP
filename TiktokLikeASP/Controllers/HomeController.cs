@@ -37,7 +37,9 @@ namespace TiktokLikeASP.Controllers
                 ViewData["Username"] = HttpContext.Session.GetString("Username");
                 ViewData["SessionActiveState"] = true;
             }
-        
+
+            if (TempData["Error"] != null) ViewData["Error"] = TempData["Error"];
+
             var applicationDbContext = _context.Posts.Include(p => p.Creator);
             return View(await applicationDbContext.ToListAsync());
         }

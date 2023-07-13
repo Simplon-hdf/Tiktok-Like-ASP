@@ -6,6 +6,11 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome @ViewData["Username"]</h1>
+    @if (ViewData["Error"] != null && ViewData["Error"] != "")
+    {
+        <p class="text-danger"> @ViewData["Error"] </p>
+    }
+    <p></p>
 </div>
 @foreach (var item in Model)
 {
