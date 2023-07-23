@@ -27,6 +27,29 @@ namespace TiktokLikeASP.Controllers
             return View();
         }
 
+        #region Profile
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            //If someone try to connect to its profile without being logged in.
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Username")))
+            {
+                return RedirectToAction("Index", "Home");
+            } else
+            {
+                ViewData["Username"] = HttpContext.Session.GetString("Username");
+            }
+
+            return View(); //Show Profile.cshtml
+        }
+
+/*        [HttpPost]
+        public IActionResult Profile(RegisterRequest registerRequest)
+        {
+            return View("Profile");
+        }*/
+        #endregion
+
         #region REGISTER
         [HttpGet]
         public IActionResult Register() 
