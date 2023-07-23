@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Profile";
 }
+@model TiktokLikeASP.Models.ViewModels.EditProfileRequest
 
 <h2>@ViewData["Username"]</h2>
 
@@ -12,7 +13,8 @@
         <input class="form-control"
                type="text"
                name="username"
-               placeholder="Username" />
+               placeholder="Username" 
+               asp-for="Username" />
     </div>
 
     <div class="container py-2">
@@ -20,15 +22,17 @@
         <input class="form-control"
                type="password"
                name="password"
-               placeholder="Password" />
+               placeholder="Password"
+               asp-for="Password" />
     </div>
 
     <div class="container py-2">
         <label class="form-label"><b>Confirm new Password</b></label> <br />
         <input class="form-control"
                type="password"
-               name="confirmpassword"
-               placeholder="Password" />
+               name="confirmPassword"
+               placeholder="Confirm password" 
+               asp-for="ConfirmPassword" />
     </div>
 
     <div class="container py-2">

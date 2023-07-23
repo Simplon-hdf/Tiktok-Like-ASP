@@ -5,6 +5,7 @@ using TiktokLikeASP.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 
 namespace TiktokLikeASP.Controllers
 {
@@ -43,11 +44,82 @@ namespace TiktokLikeASP.Controllers
             return View(); //Show Profile.cshtml
         }
 
-/*        [HttpPost]
-        public IActionResult Profile(RegisterRequest registerRequest)
+        [HttpPost]
+        public async Task<IActionResult> Profile(EditProfileRequest profileRequest)
         {
+            //In case session expired.
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Username")))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            //Passwords and confirmed password must be the sames.
+            if (profileRequest.Password != "" && profileRequest.Password != profileRequest.ConfirmPassword)
+            {
+                ModelState.AddModelError("", "Passwords do not match.");
+                return View("Profile");
+            }
+
+            //New username cannot be the same as the old one.
+            string oldUsername = HttpContext.Session.GetString("Username");
+            if (profileRequest.Username != "" && oldUsername == profileRequest.Username)
+            {
+                ModelState.AddModelError("", "Cannot update username: new is the same as previous.");
+                return View("Profile");
+            }
+
+            //Check if another user has the new username.
+
+            var userToUpdate = await _context.Persons.FirstOrDefaultAsync(user => user.Name == HttpContext.Session.GetString("Username"));
+
+            if(userToUpdate == null)
+            {
+                ModelState.AddModelError("", "User does not exists ?");
+                return View("Profile");
+            }
+
+            string newPassword = userToUpdate.Password;
+            if (profileRequest.Password != "") newPassword = profileRequest.Password;
+            
+            string newUsername = userToUpdate.Name;
+            if(profileRequest.Username != "") newUsername = profileRequest.Username;
+
+            userToUpdate.Name = newUsername;
+            userToUpdate.Password = newPassword;
+
+            /*if (await TryUpdateModelAsync(userToUpdate,
+                "",
+                user => user.Name,
+                user => user.Password
+                ))
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    HttpContext.Session.SetString("Username", userToUpdate.Name);
+                }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. " + "Try again or change informations.");
+                    return View("Profile");
+                }
+
+                ModelState.AddModelError("", "The changes have been saved." + " New username:" + HttpContext.Session.GetString("Username"));
+                return View("Profile");
+            }
+            else
+            {
+                return View("Profile");
+            }*/
+
+            _context.Update(userToUpdate);
+
+
+            await _context.SaveChangesAsync();
+            HttpContext.Session.SetString("Username", userToUpdate.Name);
+            ModelState.AddModelError("", "The changes have been saved." + " New username:" + HttpContext.Session.GetString("Username"));
             return View("Profile");
-        }*/
+        }
         #endregion
 
         #region REGISTER
