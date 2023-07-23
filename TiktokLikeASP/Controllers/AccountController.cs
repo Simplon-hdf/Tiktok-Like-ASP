@@ -76,6 +76,9 @@ namespace TiktokLikeASP.Controllers
             {
                 ModelState.AddModelError("", "User does not exists ?");
                 return View("Profile");
+            } else
+            {
+                ModelState.AddModelError("", "User is: " + userToUpdate.Name);
             }
 
             string newPassword = userToUpdate.Password;
@@ -112,13 +115,12 @@ namespace TiktokLikeASP.Controllers
                 return View("Profile");
             }*/
 
-            _context.Update(userToUpdate);
-
+            /*_context.Update(userToUpdate);
 
             await _context.SaveChangesAsync();
             HttpContext.Session.SetString("Username", userToUpdate.Name);
             ModelState.AddModelError("", "The changes have been saved." + " New username:" + HttpContext.Session.GetString("Username"));
-            return View("Profile");
+            */return View("Profile");
         }
         #endregion
 
