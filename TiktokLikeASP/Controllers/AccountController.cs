@@ -53,6 +53,9 @@ namespace TiktokLikeASP.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            var userToUpdate = await _context.Persons.FirstOrDefaultAsync(user => user.Name == HttpContext.Session.GetString("Username"));
+
+            #region Search errors
             //Passwords and confirmed password must be the sames.
             if (profileRequest.Password != "" && profileRequest.Password != profileRequest.ConfirmPassword)
             {
@@ -68,59 +71,53 @@ namespace TiktokLikeASP.Controllers
                 return View("Profile");
             }
 
+
+
             //Check if another user has the new username.
 
-            var userToUpdate = await _context.Persons.FirstOrDefaultAsync(user => user.Name == HttpContext.Session.GetString("Username"));
+            //Check if the new password is different than the old one.
+
+
 
             if(userToUpdate == null)
             {
                 ModelState.AddModelError("", "User does not exists ?");
                 return View("Profile");
-            } else
-            {
-                ModelState.AddModelError("", "User is: " + userToUpdate.Name);
             }
+            #endregion
+
+            string newUsername = userToUpdate.Name;
+            if(profileRequest.Username != "" && profileRequest.Username != null) 
+                newUsername = profileRequest.Username;
 
             string newPassword = userToUpdate.Password;
-            if (profileRequest.Password != "") newPassword = profileRequest.Password;
+            if (profileRequest.Password != "" && profileRequest.Password != null) 
+                newPassword = PasswordHashing(profileRequest.Password);
             
-            string newUsername = userToUpdate.Name;
-            if(profileRequest.Username != "") newUsername = profileRequest.Username;
-
             userToUpdate.Name = newUsername;
             userToUpdate.Password = newPassword;
+            _context.Attach(userToUpdate).Property(u => u.Name).IsModified = true;
+            _context.Attach(userToUpdate).Property(u => u.Password).IsModified = true;
 
-            /*if (await TryUpdateModelAsync(userToUpdate,
-                "",
-                user => user.Name,
-                user => user.Password
-                ))
+            try
             {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    HttpContext.Session.SetString("Username", userToUpdate.Name);
-                }
-                catch (DbUpdateException)
-                {
-                    ModelState.AddModelError("", "Unable to save changes. " + "Try again or change informations.");
-                    return View("Profile");
-                }
-
-                ModelState.AddModelError("", "The changes have been saved." + " New username:" + HttpContext.Session.GetString("Username"));
-                return View("Profile");
+                await _context.SaveChangesAsync();
             }
-            else
+            catch (DbUpdateConcurrencyException)
             {
-                return View("Profile");
-            }*/
+                ModelState.AddModelError("", "Error when processing the request. Please try again");
+                throw;
+            }
 
-            /*_context.Update(userToUpdate);
-
-            await _context.SaveChangesAsync();
             HttpContext.Session.SetString("Username", userToUpdate.Name);
-            ModelState.AddModelError("", "The changes have been saved." + " New username:" + HttpContext.Session.GetString("Username"));
-            */return View("Profile");
+            ModelState.AddModelError(
+                "", 
+                "The changes have been saved." + 
+                " New username:" + 
+                HttpContext.Session.GetString("Username")
+            );
+            
+            return View("Profile");
         }
         #endregion
 
@@ -177,6 +174,13 @@ namespace TiktokLikeASP.Controllers
              */
 
             return password;
+        }
+
+        private string DecrytPassword(string hashedPssword)
+        {
+            /* Is that even possible ? */
+
+            return hashedPssword;
         }
         #endregion
 
