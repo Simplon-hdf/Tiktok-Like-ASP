@@ -12,6 +12,8 @@ namespace TiktokLikeASP.Controllers
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private static bool changeMades = false;
+        private static string changesResume = "";
 
         /// <summary>
         /// Store Database context on application start.
@@ -27,6 +29,9 @@ namespace TiktokLikeASP.Controllers
             return View();
         }
 
+
+
+
         
         [HttpGet]
         public IActionResult Profile()
@@ -40,8 +45,17 @@ namespace TiktokLikeASP.Controllers
                 ViewData["Username"] = HttpContext.Session.GetString("Username");
             }
 
+            if (changeMades)
+            {
+                ViewData["ChangesMade"] = changesResume;
+                changeMades = false;
+            }
+
             return View(); //Show Profile.cshtml
         }
+
+
+
 
         #region Edit Username and Password
         
@@ -78,24 +92,29 @@ namespace TiktokLikeASP.Controllers
             var userToUpdate = await _context.Persons.FirstOrDefaultAsync(user => user.Name == HttpContext.Session.GetString("Username"));
 
             #region Search errors
+            if (userToUpdate == null)
+            {
+                ModelState.AddModelError("", "User does not exists ?");
+                return View("EditUsername");
+            }
+
             //New username cannot be the same as the old one.
             string oldUsername = HttpContext.Session.GetString("Username");
             if (username != "" && oldUsername == username)
             {
                 ModelState.AddModelError("", "Cannot update username: new is the same as previous.");
-                return View("Profile");
+                return View("EditUsername");
             }
 
+            //If another user has the new username, current user cannot take it.
+            var newUsernameTaken = await _context.Persons.FirstOrDefaultAsync(
+                user => user.Name == username
+            );
 
-
-            //Check if another user has the new username.
-
-
-
-            if(userToUpdate == null)
+            if (newUsernameTaken != null)
             {
-                ModelState.AddModelError("", "User does not exists ?");
-                return View("Profile");
+                ModelState.AddModelError("", "New username isn't available.");
+                return View("EditUsername");
             }
             #endregion
 
@@ -117,12 +136,11 @@ namespace TiktokLikeASP.Controllers
             }
 
             HttpContext.Session.SetString("Username", userToUpdate.Name);
-            ModelState.AddModelError(
-                "", 
-                "The changes have been saved." + 
-                " New username:" + 
-                HttpContext.Session.GetString("Username")
-            );
+            changeMades = true;
+            changesResume =
+                "The changes have been saved." +
+                " New username:" +
+                HttpContext.Session.GetString("Username");
             
             return View("Profile");
         }
@@ -149,7 +167,7 @@ namespace TiktokLikeASP.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditPassword(string password, string confirmPassword)
+        public async Task<IActionResult> EditPassword(string currentpassword, string newpassword, string confirmNewPassword)
         {
             //In case the session expired.
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("Username")))
@@ -160,29 +178,37 @@ namespace TiktokLikeASP.Controllers
             var userToUpdate = await _context.Persons.FirstOrDefaultAsync(user => user.Name == HttpContext.Session.GetString("Username"));
 
             #region Search errors
-            //Passwords and confirmed password must be the sames.
-            if (password != "" && password != confirmPassword)
-            {
-                ModelState.AddModelError("", "Passwords do not match.");
-                return View("Profile");
-            }
-
-
-
-            //Check if the new password is different than the old one.
-
-
-
             if (userToUpdate == null)
             {
                 ModelState.AddModelError("", "User does not exists ?");
-                return View("Profile");
+                return View("EditPassword");
+            }
+
+            // Password isn't correct
+            if (PasswordHashing(currentpassword) != userToUpdate.Password)
+            {
+                ModelState.AddModelError("", "Incorrect password.");
+                return View("EditPassword");
+            }
+
+            //Passwords and confirmed password must be the sames.
+            if (newpassword != "" && newpassword != confirmNewPassword)
+            {
+                ModelState.AddModelError("", "Passwords do not match.");
+                return View("EditPassword");
+            }
+
+            // Cannot update password if it's the same as the old one
+            if(PasswordHashing(newpassword) == userToUpdate.Password)
+            {
+                ModelState.AddModelError("", "The new password cannot be the same as the current one");
+                return View("EditPassword");
             }
             #endregion
 
             string newPassword = userToUpdate.Password;
-            if (password != "" && password != null)
-                newPassword = PasswordHashing(password);
+            if (newpassword != "" && newpassword != null)
+                newPassword = PasswordHashing(newpassword);
 
             userToUpdate.Password = newPassword;
             _context.Attach(userToUpdate).Property(u => u.Password).IsModified = true;
@@ -196,14 +222,9 @@ namespace TiktokLikeASP.Controllers
                 ModelState.AddModelError("", "Error when processing the request. Please try again");
                 throw;
             }
-
-            HttpContext.Session.SetString("Username", userToUpdate.Name);
-            ModelState.AddModelError(
-                "",
-                "The changes have been saved." +
-                " New username:" +
-                HttpContext.Session.GetString("Username")
-            );
+            
+            changeMades = true;
+            changesResume = "The changes have been saved.";
 
             return View("Profile");
         }

@@ -8,7 +8,7 @@
 
 <div class="container py-2">
     <form method="post" action="RedirectToEditUsername">
-        <label class="form-label"><b>Change Username</b></label>
+        <label class="form-label"><b>Change Username</b></label> <br />
         <input type="submit"
                name="changeusername"
                value="Change Username"
@@ -24,4 +24,11 @@
                 value="Change Password"
                 class="btn btn-primary" />
     </form>
+</div>
+
+<div class="container py-2">
+@if (ViewData["ChangesMade"] != null && typeof(string) == ViewData["ChangesMade"].GetType())
+{
+    <p class="btn-danger">@ViewData["ChangesMade"]</p>
+}
 </div>
