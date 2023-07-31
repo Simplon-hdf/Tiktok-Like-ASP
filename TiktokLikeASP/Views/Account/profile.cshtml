@@ -6,21 +6,22 @@
 
 <h3>Update profile</h3>
 
-<h4>Username</h4>
+<div class="container py-2">
+    <form method="post" action="RedirectToEditUsername">
+        <label class="form-label"><b>Change Username</b></label>
+        <input type="submit"
+               name="changeusername"
+               value="Change Username"
+               class="btn btn-primary" />
+    </form>
+</div>
 
-<input 
-    type="submit" 
-    name="changeusername" 
-    value="Change Username" 
-    formaction=@Url.Action("RedirectToEditUsername") 
-    formmethod="post" 
-    class="btn btn-primary" />
-
-<h4>Password</h4>
-<input 
-    type="submit" 
-    name="changepassword" 
-    value="Change Password"
-       formaction=@Url.Action("RedirectToEditPassword")
-       formmethod="post" 
-    class="btn btn-primary" />
+<div class="container py-2">
+    <form method="post" action="RedirectToEditPassword">
+        <p class="form-label"><b>Change Password</b></p>
+        <input type="submit"
+                name="changepassword"
+                value="Change Password"
+                class="btn btn-primary" />
+    </form>
+</div>
