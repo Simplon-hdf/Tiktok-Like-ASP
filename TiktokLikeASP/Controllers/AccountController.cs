@@ -44,6 +44,13 @@ namespace TiktokLikeASP.Controllers
         }
 
         #region Edit Username and Password
+        
+        [HttpPost]
+        public ActionResult RedirectToEditUsername()
+        {
+            return View("EditUsername");
+        }
+
         [HttpGet]
         public IActionResult EditUsername()
         {
@@ -73,7 +80,7 @@ namespace TiktokLikeASP.Controllers
             #region Search errors
             //New username cannot be the same as the old one.
             string oldUsername = HttpContext.Session.GetString("Username");
-            if (profileRequest.Username != "" && oldUsername == profileRequest.Username)
+            if (username != "" && oldUsername == username)
             {
                 ModelState.AddModelError("", "Cannot update username: new is the same as previous.");
                 return View("Profile");
@@ -93,8 +100,8 @@ namespace TiktokLikeASP.Controllers
             #endregion
 
             string newUsername = userToUpdate.Name;
-            if(profileRequest.Username != "" && profileRequest.Username != null)
-                newUsername = profileRequest.Username;
+            if(username != "" && username != null)
+                newUsername = username;
             
             userToUpdate.Name = newUsername;
             _context.Attach(userToUpdate).Property(u => u.Name).IsModified = true;
@@ -120,6 +127,12 @@ namespace TiktokLikeASP.Controllers
             return View("Profile");
         }
 
+        [HttpPost]
+        public ActionResult RedirectToEditPassword()
+        {
+            return View("EditPassword");
+        }
+
         [HttpGet]
         public IActionResult EditPassword()
         {
@@ -138,7 +151,7 @@ namespace TiktokLikeASP.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPassword(string password, string confirmPassword)
         {
-            //In case session expired.
+            //In case the session expired.
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("Username")))
             {
                 return RedirectToAction("Index", "Home");
@@ -148,7 +161,7 @@ namespace TiktokLikeASP.Controllers
 
             #region Search errors
             //Passwords and confirmed password must be the sames.
-            if (profileRequest.Password != "" && profileRequest.Password != profileRequest.ConfirmPassword)
+            if (password != "" && password != confirmPassword)
             {
                 ModelState.AddModelError("", "Passwords do not match.");
                 return View("Profile");
@@ -168,8 +181,8 @@ namespace TiktokLikeASP.Controllers
             #endregion
 
             string newPassword = userToUpdate.Password;
-            if (profileRequest.Password != "" && profileRequest.Password != null)
-                newPassword = PasswordHashing(profileRequest.Password);
+            if (password != "" && password != null)
+                newPassword = PasswordHashing(password);
 
             userToUpdate.Password = newPassword;
             _context.Attach(userToUpdate).Property(u => u.Password).IsModified = true;

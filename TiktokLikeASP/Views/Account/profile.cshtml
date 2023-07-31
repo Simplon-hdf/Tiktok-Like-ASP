@@ -1,5 +1,4 @@
-﻿@model TiktokLikeASP.Models.ViewModels.EditProfileRequest
-@{
+﻿@{
     ViewData["Title"] = "Profile";
 }
 
@@ -7,45 +6,21 @@
 
 <h3>Update profile</h3>
 
-<h4>Change Username</h4>
-<form action="/Account/ChangeUsername" method="post">
-    <div class="container py-2">
-        <label class="form-label"> <b>New Username</b></label> <br />
-        <input class="form-control"
-               type="text"
-               name="username"
-               placeholder="Username"
-               asp-for="Username"
-               data-/>
-    </div>
+<h4>Username</h4>
 
-    <div class="container py-2">
-        <input class="btn btn-dark " type="submit" value="Update Profile" />
-    </div>
-    <!-- In case of errors: show an error message depending of the problem encountered.-->
-    <div asp-validation-summary="All" class="text-danger"></div>
-</form>
+<input 
+    type="submit" 
+    name="changeusername" 
+    value="Change Username" 
+    formaction=@Url.Action("RedirectToEditUsername") 
+    formmethod="post" 
+    class="btn btn-primary" />
 
-
-<h4>Change Password</h4>
-<form action="/Account/ChangePassword" method="post">
-    <div class="container py-2">
-        <label class="form-label"><b>New Password</b></label> <br />
-        <input class="form-control"
-               type="password"
-               name="password"
-               placeholder="Password"
-               asp-for="Password" />
-    </div>
-
-    <div class="container py-2">
-        <label class="form-label"><b>Confirm new Password</b></label> <br />
-        <input class="form-control"
-               type="password"
-               name="confirmPassword"
-               placeholder="Confirm password" 
-               asp-for="ConfirmPassword" />
-    </div>
-    <!-- In case of errors: show an error message depending of the problem encountered.-->
-    <div asp-validation-summary="All" class="text-danger"></div>
-</form>
+<h4>Password</h4>
+<input 
+    type="submit" 
+    name="changepassword" 
+    value="Change Password"
+       formaction=@Url.Action("RedirectToEditPassword")
+       formmethod="post" 
+    class="btn btn-primary" />
