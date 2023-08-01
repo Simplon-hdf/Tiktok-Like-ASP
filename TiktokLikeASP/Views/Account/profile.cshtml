@@ -27,8 +27,5 @@
 </div>
 
 <div class="container py-2">
-@if (ViewData["ChangesMade"] != null && typeof(string) == ViewData["ChangesMade"].GetType())
-{
-    <p class="btn-danger">@ViewData["ChangesMade"]</p>
-}
+    <p style="color: green;"> <b>@ViewData["ChangesMade"]</b></p>
 </div>

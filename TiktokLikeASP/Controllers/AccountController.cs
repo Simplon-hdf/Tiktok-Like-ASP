@@ -49,6 +49,10 @@ namespace TiktokLikeASP.Controllers
             {
                 ViewData["ChangesMade"] = changesResume;
                 changeMades = false;
+            } 
+            else
+            {
+                ViewData["ChangesMade"] = "";
             }
 
             return View(); //Show Profile.cshtml
@@ -138,11 +142,11 @@ namespace TiktokLikeASP.Controllers
             HttpContext.Session.SetString("Username", userToUpdate.Name);
             changeMades = true;
             changesResume =
-                "The changes have been saved." +
-                " New username:" +
+                "The changes have been saved. \n" +
+                " New username: " +
                 HttpContext.Session.GetString("Username");
             
-            return View("Profile");
+            return Redirect("Profile");
         }
 
         [HttpPost]
@@ -206,11 +210,11 @@ namespace TiktokLikeASP.Controllers
             }
             #endregion
 
-            string newPassword = userToUpdate.Password;
+            string updatedPassword = userToUpdate.Password;
             if (newpassword != "" && newpassword != null)
-                newPassword = PasswordHashing(newpassword);
+                updatedPassword = PasswordHashing(newpassword);
 
-            userToUpdate.Password = newPassword;
+            userToUpdate.Password = updatedPassword;
             _context.Attach(userToUpdate).Property(u => u.Password).IsModified = true;
 
             try
@@ -226,9 +230,11 @@ namespace TiktokLikeASP.Controllers
             changeMades = true;
             changesResume = "The changes have been saved.";
 
-            return View("Profile");
+            return Redirect("Profile");
         }
         #endregion
+
+
 
         #region REGISTER
         [HttpGet]
@@ -293,6 +299,8 @@ namespace TiktokLikeASP.Controllers
         }
         #endregion
 
+
+
         #region LOGIN
         [HttpGet]
         public IActionResult Login()
@@ -330,6 +338,8 @@ namespace TiktokLikeASP.Controllers
             return RedirectToAction("Index", "Home"); //Should later redirect to the feed of posts.
         }
         #endregion
+
+
 
         #region LOGOUT
         [HttpGet]
