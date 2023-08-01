@@ -208,7 +208,7 @@ namespace TiktokLikeASP.Controllers
                 return View("EditPassword");
             } 
             
-            if(newpassword == "" || confirmNewPassword == "")
+            if(newpassword == "" || confirmNewPassword == "" || newpassword == null)
             {
                 ModelState.AddModelError("", "Password field is empty. Please enter a new password and confirm it.");
                 return View("EditPassword");
