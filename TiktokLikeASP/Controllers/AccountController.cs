@@ -102,6 +102,12 @@ namespace TiktokLikeASP.Controllers
                 return View("EditUsername");
             }
 
+            if(username == null || username == "")
+            {
+                ModelState.AddModelError("", "Cannot update username: Username field is empty.");
+                return View("EditUsername");
+            }
+
             //New username cannot be the same as the old one.
             string oldUsername = HttpContext.Session.GetString("Username");
             if (username != "" && oldUsername == username)
@@ -199,6 +205,12 @@ namespace TiktokLikeASP.Controllers
             if (newpassword != "" && newpassword != confirmNewPassword)
             {
                 ModelState.AddModelError("", "Passwords do not match.");
+                return View("EditPassword");
+            } 
+            
+            if(newpassword == "" || confirmNewPassword == "")
+            {
+                ModelState.AddModelError("", "Password field is empty. Please enter a new password and confirm it.");
                 return View("EditPassword");
             }
 
