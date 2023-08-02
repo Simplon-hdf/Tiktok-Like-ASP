@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>@ViewData["Username"]</h2>
+
+<h3>Update profile</h3>
+
+<div class="container py-2">
+    <form method="post" action="RedirectToEditUsername">
+        <label class="form-label"><b>Change Username</b></label> <br />
+        <input type="submit"
+               name="changeusername"
+               value="Change Username"
+               class="btn btn-primary" />
+    </form>
+</div>
+
+<div class="container py-2">
+    <form method="post" action="RedirectToEditPassword">
+        <p class="form-label"><b>Change Password</b></p>
+        <input type="submit"
+                name="changepassword"
+                value="Change Password"
+                class="btn btn-primary" />
+    </form>
+</div>
+
+<div class="container py-2">
+    <p style="color: green;"> <b>@ViewData["ChangesMade"]</b></p>
+</div>
