@@ -1,22 +1,34 @@
-﻿@{
+﻿@model TiktokLikeASP.Models.ViewModels.EditProfileRequest
+@{
     ViewData["Title"] = "Profile";
 }
-@model TiktokLikeASP.Models.ViewModels.EditProfileRequest
 
 <h2>@ViewData["Username"]</h2>
 
 <h3>Update profile</h3>
 
-<form action="/Account/Profile" method="post">
+<h4>Change Username</h4>
+<form action="/Account/ChangeUsername" method="post">
     <div class="container py-2">
         <label class="form-label"> <b>New Username</b></label> <br />
         <input class="form-control"
                type="text"
                name="username"
-               placeholder="Username" 
-               asp-for="Username" />
+               placeholder="Username"
+               asp-for="Username"
+               data-/>
     </div>
 
+    <div class="container py-2">
+        <input class="btn btn-dark " type="submit" value="Update Profile" />
+    </div>
+    <!-- In case of errors: show an error message depending of the problem encountered.-->
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>
+
+
+<h4>Change Password</h4>
+<form action="/Account/ChangePassword" method="post">
     <div class="container py-2">
         <label class="form-label"><b>New Password</b></label> <br />
         <input class="form-control"
@@ -34,11 +46,6 @@
                placeholder="Confirm password" 
                asp-for="ConfirmPassword" />
     </div>
-
-    <div class="container py-2">
-        <input class="btn btn-dark " type="submit" value="Update Profile" />
-    </div>
-
     <!-- In case of errors: show an error message depending of the problem encountered.-->
     <div asp-validation-summary="All" class="text-danger"></div>
 </form>
