@@ -7,45 +7,26 @@
 
 <h3>Update profile</h3>
 
-<h4>Change Username</h4>
-<form action="/Account/ChangeUsername" method="post">
-    <div class="container py-2">
-        <label class="form-label"> <b>New Username</b></label> <br />
-        <input class="form-control"
-               type="text"
-               name="username"
-               placeholder="Username"
-               asp-for="Username"
-               data-/>
-    </div>
+<div class="container py-2">
+    <form method="post" action="RedirectToEditUsername">
+        <label class="form-label"><b>Change Username</b></label> <br />
+        <input type="submit"
+               name="changeusername"
+               value="Change Username"
+               class="btn btn-primary" />
+    </form>
+</div>
 
-    <div class="container py-2">
-        <input class="btn btn-dark " type="submit" value="Update Profile" />
-    </div>
-    <!-- In case of errors: show an error message depending of the problem encountered.-->
-    <div asp-validation-summary="All" class="text-danger"></div>
-</form>
+<div class="container py-2">
+    <form method="post" action="RedirectToEditPassword">
+        <p class="form-label"><b>Change Password</b></p>
+        <input type="submit"
+                name="changepassword"
+                value="Change Password"
+                class="btn btn-primary" />
+    </form>
+</div>
 
-
-<h4>Change Password</h4>
-<form action="/Account/ChangePassword" method="post">
-    <div class="container py-2">
-        <label class="form-label"><b>New Password</b></label> <br />
-        <input class="form-control"
-               type="password"
-               name="password"
-               placeholder="Password"
-               asp-for="Password" />
-    </div>
-
-    <div class="container py-2">
-        <label class="form-label"><b>Confirm new Password</b></label> <br />
-        <input class="form-control"
-               type="password"
-               name="confirmPassword"
-               placeholder="Confirm password" 
-               asp-for="ConfirmPassword" />
-    </div>
-    <!-- In case of errors: show an error message depending of the problem encountered.-->
-    <div asp-validation-summary="All" class="text-danger"></div>
-</form>
+<div class="container py-2">
+    <p style="color: green;"> <b>@ViewData["ChangesMade"]</b></p>
+</div>
